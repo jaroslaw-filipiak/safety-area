@@ -1,0 +1,46 @@
+@import './base/typography';
+
+@import './components/top-bar';
+@import './components/notifications-slider';
+@import './components/side-menu';
+@import './components/mode-switcher';
+@import './components/buttons';
+@import './components/breadcrumbs';
+@import './components/testimonials';
+@import './components/person-popup';
+@import './components/pricing';
+
+@import './layout/grid';
+@import './layout/footer';
+@import './layout/navigation';
+
+@import './vendors/hamburgers/hamburgers';
+@import './vendors/swiper';
+@import './vendors/scrollbar';
+@import './vendors/accordion';
+// @import './utils/debug';
+
+@import './pages/single';
+@import './pages/pricing';
+
+html,
+body {
+  @apply dark:bg-darkMain text-[12px];
+}
+
+html.lenis {
+  height: auto;
+
+  &.lenis-smooth {
+    scroll-behavior: auto;
+  }
+  &.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  &.lenis-stopped {
+    overflow: hidden;
+  }
+  &.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+}

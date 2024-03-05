@@ -1,0 +1,16 @@
+.side-menu {
+  @apply dark:bg-darkMain pt-[84px] pb-[34] pl-6 pr-6 fixed left-0 top-[60px] w-screen bg-red z-[99];
+  height: calc(100dvh - 60px);
+
+  .parent {
+    @apply border-b dark:border-dark pt-5 pb-5;
+  }
+
+  .submenu {
+    @apply dark:text-light flex flex-col gap-[2px];
+
+    li {
+      @apply text-[14px] h-10 dark:bg-dark pl-3 pr-3 flex items-center;
+    }
+  }
+}

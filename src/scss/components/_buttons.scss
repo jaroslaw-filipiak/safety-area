@@ -1,0 +1,71 @@
+.btn {
+  @apply inline-flex items-center justify-between pl-[21px] pr-[21px] xl:pl-[27px] xl:pr-[22px] 2xl:pl-[37px] 2xl:pr-[33px] pt-5 lg:pt-6 pb-5 lg:pb-6 rounded-full;
+
+  span {
+    @apply text-[14px] lg:text-[16px];
+  }
+
+  img,
+  svg {
+    @apply ml-6 lg:ml-9;
+  }
+
+  &--dark {
+    @apply dark:bg-dark hover:scale-[103%] dark:hover:bg-red  transition-all text-light;
+  }
+
+  &--red {
+    @apply dark:bg-red hover:scale-[103%] transition-all;
+  }
+}
+
+/*
+*
+* ========================================================
+* CUSTOM ANIMATIONS ON HOVER
+* ========================================================
+*  
+*/
+
+.btn--contact__animation {
+  .line__transform {
+    transform: translate(455.213px, 7761.406px);
+    transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+  &:hover {
+    .line__transform {
+      transform: translate(455.213px, 7772.5px);
+      transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+  }
+}
+
+@keyframes startX2 {
+  to {
+    x2: 6; /* Adjust the desired value at the end of the animation */
+  }
+}
+
+@keyframes startX2 {
+  to {
+    x2: 11; /* Adjust the desired value at the end of the animation */
+  }
+}
+
+.btn--pricing__animation {
+  .line__transform {
+    transform: translate(139.5px, 29.5px);
+    transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    transform-origin: center !important;
+    animation: startX2 0.3s ease forwards;
+  }
+
+  &:hover {
+    // .line__transform {
+    //   transform: translate(139.5px, 29.5px);
+    //   transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    //   transform-origin: center !important;
+    //   animation: endX2 0.3s ease forwards;
+    // }
+  }
+}

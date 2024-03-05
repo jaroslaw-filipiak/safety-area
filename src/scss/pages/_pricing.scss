@@ -1,0 +1,30 @@
+.accordion-bg-dark3 {
+  @apply relative;
+
+  .pricing__trigger {
+    @apply relative;
+    z-index: 2;
+  }
+
+  .pricing__area-details {
+    @apply relative;
+    top: 5px;
+  }
+
+  svg {
+    @apply relative rotate-180;
+    z-index: 2;
+  }
+
+  @media (min-width: 1024px) {
+    &:after {
+      content: '';
+      width: 60%;
+      height: 90%;
+      background-color: #262626 !important;
+      @apply block absolute left-[50%] top-[60%];
+      border-radius: 4px 4px 0px;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
