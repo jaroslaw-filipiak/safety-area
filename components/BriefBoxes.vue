@@ -1,10 +1,10 @@
 <template>
   <div class="mt-[20px] mb-20">
     <ul>
-      <li>
-        <div class="brief-box">
+      <li v-for="item in cart" :key="item.id">
+        <div class="brief-box" :id="item.id">
           <div class="brief-box__top">
-            <div class="brief-box__top--title">Projekt wizytówki firmowej</div>
+            <div class="brief-box__top--title">{{ item.title }}</div>
             <div class="flex items-center justify-end gap-[60px]">
               <div class="brief-box__top--remove">
                 <svg
@@ -30,7 +30,7 @@
                 <div>Usuń</div>
               </div>
               <div class="brief-box__top--price">
-                Cena netto <span>200,-</span>
+                Cena netto <span>{{ item.price }},-</span>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@
 
 <style lang="scss" scoped>
   .brief-box {
-    @apply bg-dark3 p-[24px] border-[2px] border-dark lg:w-[951px] w-full;
+    @apply bg-dark3 p-[24px] border-[2px] border-dark lg:w-[951px] w-full mb-5;
 
     &__top {
       @apply flex justify-between items-center;

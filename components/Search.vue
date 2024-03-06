@@ -5,7 +5,7 @@
         <!-- <code>{{ searchTerm.length }}</code> -->
         <!-- <code>{{ selectedItems }}</code> -->
          <!-- <code>{{ pricing }}</code>  -->
-      
+
         </pre>
 
     <p
@@ -49,7 +49,7 @@
       <div v-if="searchTerm.length || showList" class="results__wrapper">
         <ul @change="store.updateCart(selectedItems)" class="bg-dark3">
           <li
-            v-for="item in filteredItems"
+            v-for="item in store.filteredItems(searchTerm)"
             class="flex items-center justify-between h-[49px] pr-[13px] lg:pr-[28px] pl-[15px] lg:pl-[39px]"
           >
             <div class="flex items-center">
@@ -109,13 +109,13 @@
 
   const items = ref(pricing);
 
-  const filteredItems = computed(() =>
-    items.value.filter(
-      (item) =>
-        item.title &&
-        item.title.toLowerCase().includes(searchTerm.value.toLowerCase())
-    )
-  );
+  //   const filteredItems = computed(() =>
+  //     items.value.filter(
+  //       (item) =>
+  //         item.title &&
+  //         item.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+  //     )
+  //   );
 </script>
 
 <style lang="scss" scoped>

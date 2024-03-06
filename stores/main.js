@@ -22,14 +22,21 @@ export const useMainStore = defineStore('mainStore', {
       }
     },
     updateCart(payload) {
-      console.log('updating cart...');
-      console.log(payload);
       this.cart = payload;
       this.cart.length ? (this.isCartOpen = true) : (this.isCartOpen = false);
     },
     removeFromCart(id) {
       console.log('removing from cart...');
       this.cart = this.cart.filter((item) => item.id !== id);
+    },
+  },
+  getters: {
+    filteredItems: (state) => (searchTerm) => {
+      return state.pricing.filter(
+        (item) =>
+          item.title &&
+          item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     },
   },
 });
