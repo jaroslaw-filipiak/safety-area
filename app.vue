@@ -5,8 +5,9 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+// import { useMainStore } from './stores/main';
 
-import { onMounted } from 'vue'
 
 onMounted(() => {
   document.body.classList.add('dark')

@@ -1,10 +1,21 @@
 <template>
     <section class="lg:mt-[140px] 2xl:mt-[240px] max-lg:w-full ">
-        <p class="text-light text-[18px] lg:text-[20px] text-center mb-5 mt-5 lg:mt-0">Dodaj projekt</p>
-        <div class="relative" :class="{ 'is-results-wrapper-visible': resultsVisible }">
-            <input class="results__input" type="text" placeholder="Wpisz frazę, lub wybierz z listy">
 
-            <div @click="resultsVisible = !resultsVisible"
+        <pre>
+        <!-- <code>{{ filteredItems ? filteredItems : 'brak..' }}</code> -->
+        <!-- <code>{{ searchTerm.length }}</code> -->
+        <!-- <code>{{ selectedItems }}</code> -->
+         <!-- <code>{{ store.pricing }}</code>  -->
+      
+        </pre>
+
+
+        <p class="text-light text-[18px] lg:text-[20px] text-center mb-5 mt-5 lg:mt-0">Dodaj projekt</p>
+        <div class="relative" :class="{ 'is-results-wrapper-visible': showList || searchTerm.length }">
+            <input class="results__input" type="text" placeholder="Wpisz frazę, lub wybierz z listy"
+                v-model="searchTerm">
+
+            <div @click="showList = !showList"
                 class="absolute right-[10px] lg:right-[17px] top-[13px] w-[44px] h-[44px]  lg:w-[50px] lg:h-[50px]  rounded-full bg-red lg:bg-dark flex items-center justify-center cursor-pointer transition-all results__btn">
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="results__svg rotate transition-all">
@@ -14,18 +25,17 @@
             </div>
 
             <!-- results -->
-            <div v-if="resultsVisible" class="results__wrapper">
+            <div v-if="searchTerm.length || showList" class="results__wrapper">
                 <ul class="bg-dark3">
-                    <li v-for="item in 4"
+                    <li v-for="item in filteredItems"
                         class="flex items-center justify-between h-[49px] pr-[13px] lg:pr-[28px] pl-[15px] lg:pl-[39px] ">
                         <div class="flex items-center">
-                            <input class="hidden lg:flex" type="checkbox">
-                            <div class="text-[14px] lg:text-[16px] text-dark2 lg:pl-[28px]">Projekt Wizytówki
-                                Firmowej</div>
+                            <input class="hidden lg:flex" :value="item" type="checkbox" v-model="selectedItems">
+                            <div class="text-[14px] lg:text-[16px] text-dark2 lg:pl-[28px]">{{ item.title }}</div>
                         </div>
 
                         <div class="flex items-center justify-center gap-[24px]">
-                            <div class="text-[14px] lg:text-[16px] text-light ">200,-</div>
+                            <div class="text-[14px] lg:text-[16px] text-light ">{{ item.price }},-</div>
                             <div
                                 class="lg:hidden w-[32px] h-[32px] rounded-full bg-red flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
@@ -46,9 +56,26 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref } from 'vue';
+    const store = useMainStore();
+    const searchTerm = ref('');
+    const showList = ref(false);
+    const selectedItems = ref([]);
+   
+    const { data } = await useFetch('http://grafikonline.test/wp-json/options/pricing');
+    const items = ref(data);
 
-    const resultsVisible = ref(false)
+    const filteredItems = computed(() => 
+        items.value.filter(item => 
+            item.title && item.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+        )
+    );
+
+    onMounted(() => {
+        store.fetch();
+    });
+
+
 
 </script>
 

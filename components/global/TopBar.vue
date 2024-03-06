@@ -8,9 +8,28 @@
             </div>
 
             <!-- mobile -->
-            <div class="w-full text-[16px] text-light flex items-center justify-center xl:hidden">
-                <p class="text-[12px] text-green font-medium pl-[32px] pr-[32px]">Jesteś w bezpiecznej strefie składania
-                    zamówienia</p>
+            <div
+                class="w-full text-[16px] text-light flex items-center justify-center xl:hidden pl-[32px] pr-[32px] gap-3">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="11.808" height="12.391" viewBox="0 0 11.808 12.391">
+                    <g id="Lock" transform="translate(-850.463 -143.25)">
+                        <g id="Rectangle_75" data-name="Rectangle 75" transform="translate(862.271 155.641) rotate(180)"
+                            fill="none" stroke="#00ce7b" stroke-width="1.5">
+                            <rect width="11.808" height="8.329" stroke="none" />
+                            <rect x="0.75" y="0.75" width="10.308" height="6.829" fill="none" />
+                        </g>
+                        <path id="Path_307" data-name="Path 307" d="M-13418.3-19719.4v-4.023h-6.154v4.023"
+                            transform="translate(14277.747 19867.422)" fill="none" stroke="#00ce7b"
+                            stroke-width="1.5" />
+                        <line id="Line_30" data-name="Line 30" y2="2.492" transform="translate(856.367 150.231)"
+                            fill="none" stroke="#00ce7b" stroke-width="1.5" />
+                    </g>
+                </svg>
+                <p class="text-[12px] text-green font-medium ">
+
+                    Jesteś w bezpiecznej strefie składania
+                    zamówienia
+                </p>
             </div>
 
             <div class=" w-[60px] lg:w-[110px] border-b-[0px] flex flex-none items-center justify-center xl:hidden">
@@ -27,7 +46,26 @@
             <div
                 class="absolute  left-[50%] top-[50%] desktop-menu on-scroll-initial hidden xl:flex items-center lg:w-6/12 xl:w-7/12 2xl:w-6/12 lg:pl-16 xl:pl-0 translate-y-[-50%] translate-x-[-50%] transition-all ">
                 <div class="w-full flex lg:gap-[8px] xl:gap-[38px] 2xl:gap-[68px] h-full items-center justify-center">
-                    <p class="text-[14px] text-green font-medium">Jesteś w bezpiecznej strefie składania zamówienia</p>
+                    <div class="flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11.808" height="12.391"
+                            viewBox="0 0 11.808 12.391">
+                            <g id="Lock" transform="translate(-850.463 -143.25)">
+                                <g id="Rectangle_75" data-name="Rectangle 75"
+                                    transform="translate(862.271 155.641) rotate(180)" fill="none" stroke="#00ce7b"
+                                    stroke-width="1.5">
+                                    <rect width="11.808" height="8.329" stroke="none" />
+                                    <rect x="0.75" y="0.75" width="10.308" height="6.829" fill="none" />
+                                </g>
+                                <path id="Path_307" data-name="Path 307" d="M-13418.3-19719.4v-4.023h-6.154v4.023"
+                                    transform="translate(14277.747 19867.422)" fill="none" stroke="#00ce7b"
+                                    stroke-width="1.5" />
+                                <line id="Line_30" data-name="Line 30" y2="2.492" transform="translate(856.367 150.231)"
+                                    fill="none" stroke="#00ce7b" stroke-width="1.5" />
+                            </g>
+                        </svg>
+                        <p class="text-[14px] text-green font-medium">Jesteś w bezpiecznej strefie składania zamówienia
+                        </p>
+                    </div>
                 </div>
             </div>
 
