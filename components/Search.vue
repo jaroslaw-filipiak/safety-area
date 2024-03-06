@@ -92,6 +92,9 @@
           </li>
         </ul>
       </div>
+
+      <!-- Boxes -->
+      <BriefBoxes />
     </div>
   </section>
 </template>
