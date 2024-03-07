@@ -44,3 +44,11 @@ html.lenis {
     pointer-events: none;
   }
 }
+
+.required-char {
+  @apply relative;
+  &::after {
+    content: '*';
+    @apply text-red absolute -right-[12px] top-0;
+  }
+}
