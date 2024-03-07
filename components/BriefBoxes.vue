@@ -35,6 +35,8 @@
             </div>
           </div>
           <div class="divider border border-dark mt-[18px] mb-[28px]"></div>
+          <component :is="dynamicComponent" />
+          <!-- <Cf0 /> -->
           <div class="brief-box__bottom">
             <div class="flex items-center justify-between">
               <div class="brief-box__details">
@@ -127,6 +129,20 @@
 <script setup>
   const store = useMainStore();
   const { cart } = storeToRefs(store);
+  const myVariable = 'Rere';
+  const dynamicComponent = resolveComponent(myVariable);
+
+  // const yolo = resolveComponent('Yolo');
+  // const bob = resolveComponent('Bob');
+
+  //   const getComponentName = (id) => {
+  //     console.log(id);
+  //     console.log(`Cf${id}`);
+  //     // Return the component name based on the item.id
+  //     // For example, if item.id is "1", return "Component1"
+  //     // You can customize this logic based on your component names
+  //     return `Cf${id}`;
+  //   };
 </script>
 
 <style lang="scss" scoped>
