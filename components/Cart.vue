@@ -177,7 +177,11 @@
           class="bg-darkMain flex items-center justify-between rounded-[4px] h-[52px] pl-[20px] pr-[15px]"
         >
           <div class="flex items-center">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              @change="store.updatePrepayment(prepaymentChecked)"
+              v-model="prepaymentChecked"
+            />
             <p class="text-[16px] font-medium text-light pl-[21px]">
               <span class="text-red">+5% rabatu</span>
               za przedpłatę?
@@ -239,10 +243,17 @@
           </div>
         </div>
 
+        <!-- zamawiam  -->
+
         <div @mouseenter="handleButtonValidation" class="relative mt-[27px]">
           <button
-            disabled
-            class="text-darkMain font-medium text-[16px] bg-light h-[75px] rounded-[38px] bg-opacity-[0.3] w-full pointer-none relative"
+            :disabled="!store.areAllFormsFilled"
+            class="text-darkMain font-medium text-[16px] h-[75px] rounded-[38px] w-full relative"
+            :class="
+              store.areAllFormsFilled
+                ? 'bg-red text-light'
+                : 'pointer-none bg-light bg-opacity-[0.3]'
+            "
           >
             Zamawiam z obowiązkiem realizacji
           </button>
@@ -293,23 +304,30 @@
         </div>
       </div>
     </footer>
+    <code class="border p-3"
+      >areAllFormsFilled: {{ store.areAllFormsFilled }}
+      {{ areAllFormsFilled }}</code
+    >
   </div>
 </template>
 
 <script setup>
   import { ref } from 'vue';
 
-  const Validated = ref(false);
+  const prepaymentChecked = ref(false);
   const showValidationWarning = ref(false);
 
   const store = useMainStore();
+
   const { cart, isCartOpen } = storeToRefs(store);
 
   const handleButtonValidation = () => {
-    if (Validated.value === false) {
-      showValidationWarning.value = true;
-    } else {
+    console.log('handleButtonValidation');
+
+    if (store.areAllFormsFilled === true) {
       showValidationWarning.value = false;
+    } else {
+      showValidationWarning.value = true;
     }
   };
 </script>

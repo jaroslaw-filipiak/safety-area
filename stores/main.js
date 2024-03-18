@@ -5,11 +5,14 @@ export const useMainStore = defineStore('mainStore', {
     pricing: [],
     cart: [],
     isCartOpen: false,
+    prepayment: false,
+    howManyFormsAreToClient: 0,
+    howManyFormsAreFullyFilled: 0,
   }),
 
   actions: {
+    // TODO: change url after migrate to prod or create a env variable
     async fetchPricing() {
-      console.log('fetching pricing...');
       try {
         const response = await fetch(
           'http://grafikonline.test/wp-json/options/pricing'
@@ -23,11 +26,40 @@ export const useMainStore = defineStore('mainStore', {
     },
     updateCart(payload) {
       this.cart = payload;
-      this.cart.length ? (this.isCartOpen = true) : (this.isCartOpen = false);
+      this.cart?.length ? (this.isCartOpen = true) : (this.isCartOpen = false);
+      this.howManyFormsAreToClient = this.cart.length;
+    },
+    addFormFilled(payload) {
+      console.log('addFormFilled');
+      console.log(payload);
+      const id = payload;
+      this.cart = this.cart.map((item) => {
+        if (item.id === id) {
+          item.formFilled = true;
+        }
+        return item;
+      });
+    },
+    removeFormFilled(payload) {
+      console.log('addFormFilled');
+      console.log(payload);
+      const id = payload;
+      this.cart = this.cart.map((item) => {
+        if (item.id === id) {
+          item.formFilled = false;
+        }
+        return item;
+      });
+    },
+    updatePrepayment(payload) {
+      console.log('updating prepayment...');
+      console.log(payload);
+      this.prepayment = payload;
     },
     removeFromCart(id) {
       console.log('removing from cart...');
       this.cart = this.cart.filter((item) => item.id !== id);
+      this.howManyFormsAreToClient = this.cart.length;
     },
   },
   getters: {
@@ -37,6 +69,12 @@ export const useMainStore = defineStore('mainStore', {
           item.title &&
           item.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
+    },
+    getPrepayment: (state) => {
+      return state.prepayment;
+    },
+    areAllFormsFilled: (state) => {
+      return state.cart.every((item) => item.formFilled);
     },
   },
 });

@@ -33,13 +33,10 @@
     </div>
     <div class="divider border border-dark mt-[18px] mb-[28px]"></div>
 
-    <div v-if="isOpen">
-      <transition>
-        <component :is="`Cf${item.id}`" />
-      </transition>
+    <div v-show="isOpen">
+      <component :is="`Cf${item.id}`" />
     </div>
 
-    <!-- <Cf0 /> -->
     <div class="brief-box__bottom">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-7">
@@ -92,10 +89,11 @@
           </div>
         </div>
         <div
+          @click="isOpen = !isOpen"
           class="brief-box__fill-brief"
           :class="{ 'bg-red': !isOpen, 'bg-green bg-opacity-50]': isOpen }"
         >
-          <div @click="isOpen = !isOpen">
+          <div>
             {{ !isOpen ? 'Wypełnij Brief' : 'Gotowe - zwiń kartę' }}
           </div>
           <div v-if="!isOpen">
