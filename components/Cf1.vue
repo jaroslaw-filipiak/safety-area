@@ -12,7 +12,7 @@ s -->
   <code class="border p-3 mb-4 block">
     isFullyFilled: {{ isFullyFilled }} component number:
     {{ getComponentNumber(componentName) }}
-    id: {{ ID }}
+    id: {{ ID }} z composables: {{ formNumber }}
   </code>
 
   <div class="form-wrapper flex w-full border-red pt-3 pb-3">
