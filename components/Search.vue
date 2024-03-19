@@ -103,11 +103,13 @@
   import { ref } from 'vue';
   const store = useMainStore();
   const searchTerm = ref('');
-  const showList = ref(false);
   const selectedItems = ref([]);
-  const { pricing } = storeToRefs(store);
+  const showList = ref(false);
 
-  const items = ref(pricing);
+  watch(selectedItems, (newSelectedItems) => {
+    console.log('selected items changed... updating cart');
+    store.updateCart(newSelectedItems);
+  });
 
   //   const filteredItems = computed(() =>
   //     items.value.filter(

@@ -306,7 +306,7 @@
     </footer>
     <code class="border p-3"
       >areAllFormsFilled: {{ store.areAllFormsFilled }}
-      {{ areAllFormsFilled }}</code
+      {{ store.areAllFormsFilled }}</code
     >
   </div>
 </template>
