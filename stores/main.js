@@ -74,7 +74,11 @@ export const useMainStore = defineStore('mainStore', {
       return state.prepayment;
     },
     areAllFormsFilled: (state) => {
-      return state.cart.every((item) => item.formFilled);
+      if (state.cart.length === 0) {
+        return false;
+      } else {
+        return state.cart?.every((item) => item.formFilled);
+      }
     },
   },
 });

@@ -304,10 +304,6 @@
         </div>
       </div>
     </footer>
-    <code class="border p-3"
-      >areAllFormsFilled: {{ store.areAllFormsFilled }}
-      {{ store.areAllFormsFilled }}</code
-    >
   </div>
 </template>
 
