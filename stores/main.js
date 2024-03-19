@@ -6,7 +6,6 @@ export const useMainStore = defineStore('mainStore', {
     cart: [],
     isCartOpen: false,
     prepayment: false,
-    selectedItems: [],
     howManyFormsAreToClient: 0,
     howManyFormsAreFullyFilled: 0,
   }),
@@ -24,9 +23,6 @@ export const useMainStore = defineStore('mainStore', {
       } catch (e) {
         console.error(e);
       }
-    },
-    updateSelectedItems(payload) {
-      this.selectedItems = payload;
     },
     updateCart(payload) {
       this.cart = payload;

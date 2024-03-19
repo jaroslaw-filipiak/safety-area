@@ -106,10 +106,20 @@
   const selectedItems = ref([]);
   const showList = ref(false);
 
+  const { cart } = store;
+
   watch(selectedItems, (newSelectedItems) => {
     console.log('selected items changed... updating cart');
     store.updateCart(newSelectedItems);
   });
+
+  // Watch for changes in the cart state
+  watch(
+    () => store.cart,
+    (newCart) => {
+      selectedItems.value = newCart;
+    }
+  );
 
   //   const filteredItems = computed(() =>
   //     items.value.filter(
