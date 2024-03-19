@@ -50,18 +50,25 @@
         <ul @change="store.updateCart(selectedItems)" class="bg-dark3">
           <li
             v-for="item in store.filteredItems(searchTerm)"
-            class="flex items-center justify-between h-[49px] pr-[13px] lg:pr-[28px] pl-[15px] lg:pl-[39px]"
+            class="flex items-center justify-between"
           >
-            <div class="flex items-center">
-              <input
-                class="hidden lg:flex"
-                :value="item"
-                type="checkbox"
-                v-model="selectedItems"
-              />
-              <div class="text-[14px] lg:text-[16px] text-dark2 lg:pl-[28px]">
-                {{ item.title }}
-              </div>
+            <div class="flex items-center w-full">
+              <label
+                class="w-full flex items-center justify-start h-[49px] pr-[13px] lg:pr-[28px] pl-[15px] lg:pl-[39px] cursor-pointer"
+                :for="item.id"
+              >
+                <input
+                  :id="item.id"
+                  :name="item.title"
+                  class="hidden lg:flex"
+                  :value="item"
+                  type="checkbox"
+                  v-model="selectedItems"
+                />
+                <div class="text-[14px] lg:text-[16px] text-dark2 pl-4">
+                  {{ item.title }}
+                </div>
+              </label>
             </div>
 
             <div class="flex items-center justify-center gap-[24px]">
