@@ -12,12 +12,11 @@ export const useMainStore = defineStore('mainStore', {
 
   actions: {
     async fetchPricing() {
-      console.log('fetching pricing...');
       const apiUrl = useRuntimeConfig().public.apiBaseUrl;
       console.log(apiUrl);
       try {
         const response = await fetch(
-          `https://www.${apiUrl}/wp-json/options/pricing`
+          `https://j-filipiak.pl/clients/grafikonline//wp-json/options/pricing`
         );
         const data = await response.json();
 
