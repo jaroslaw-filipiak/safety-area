@@ -74,8 +74,6 @@ export const useMainStore = defineStore('mainStore', {
       });
     },
     updatePrepayment(payload) {
-      console.log('updating prepayment...');
-      console.log(payload);
       this.prepayment = payload;
     },
     removeFromCart(id) {
@@ -96,11 +94,22 @@ export const useMainStore = defineStore('mainStore', {
       return state.prepayment;
     },
     getTotalPrice: (state) => {
-      return state.cart
+      const total = state.cart
         .reduce((acc, item) => {
           return acc + Number(item.price);
         }, 0)
         .toFixed(2);
+      return state.prepayment ? (total - total * 0.05).toFixed(2) : total;
+    },
+    getTotalPriceBrutto: (state) => {
+      const total = state.cart
+        .reduce((acc, item) => {
+          return acc + Number(item.price);
+        }, 0)
+        .toFixed(2);
+
+      const brutto = (total * 1.23).toFixed(2);
+      return state.prepayment ? (brutto - brutto * 0.05).toFixed(2) : brutto;
     },
     areAllFormsFilled: (state) => {
       if (state.cart.length === 0) {

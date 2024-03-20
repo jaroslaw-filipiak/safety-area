@@ -243,7 +243,7 @@
 
       <div class="cart__footer bg-dark p-[23px]">
         <div class="text-gray text-[14px] flex justify-end mb-[3px]">
-          {{ store.getTotalPrice * 1.23 }} PLN brutto
+          {{ store.getTotalPriceBrutto }} PLN brutto
         </div>
         <div class="flex items-end justify-between">
           <div class="text-[16px] text-light">Razem:</div>
