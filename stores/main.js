@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
 export const useMainStore = defineStore('mainStore', {
   state: () => ({
@@ -11,12 +12,9 @@ export const useMainStore = defineStore('mainStore', {
   }),
 
   actions: {
-    // TODO: change url after migrate to prod or create a env variable
     async fetchPricing() {
       try {
-        const response = await fetch(
-          'http://grafikonline.test/wp-json/options/pricing'
-        );
+        const response = await fetch(`${BASE_URL}/wp-json/options/pricing`);
         const data = await response.json();
 
         this.pricing = data;
