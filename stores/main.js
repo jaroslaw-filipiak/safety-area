@@ -98,7 +98,10 @@ export const useMainStore = defineStore('mainStore', {
       if (state.cart.length === 0) {
         return false;
       } else {
-        return state.cart?.every((item) => item.formFilled);
+        return (
+          state.cart?.every((item) => item.formFilled) &&
+          state.cart?.every((item) => item.briefAccepted)
+        );
       }
     },
   },
