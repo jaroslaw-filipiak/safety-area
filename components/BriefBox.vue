@@ -118,10 +118,10 @@
             >
               {{ !isOpen ? 'Wypełnij Brief' : 'Gotowe - zwiń kartę' }}
               <span class="pl-4" v-if="isOpen">
-                <IconEdit />
+                <IconCircleCheck />
               </span>
               <span class="pl-4" v-if="!isOpen">
-                <IconCircleCheck />
+                <IconEdit />
               </span>
             </span>
 
@@ -133,7 +133,12 @@
             >
               {{ !isOpen ? 'Edytuj' : 'Gotowe - zwiń kartę' }}
 
-              <div class="pl-3"><IconEdit /></div>
+              <span class="pl-4" v-if="isOpen">
+                <IconCircleCheck />
+              </span>
+              <span class="pl-4" v-if="!isOpen">
+                <IconEdit />
+              </span>
             </span>
           </div>
         </div>
