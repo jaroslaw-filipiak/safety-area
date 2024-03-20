@@ -9,11 +9,6 @@
 s -->
 
 <template>
-  <code class="border p-3 mb-4 block">
-    isFullyFilled: {{ isFullyFilled }} businessCardType:
-    {{ businessCardType }} businessCardWeight: {{ businessCardWeight }}
-  </code>
-
   <div class="form-wrapper flex w-full border-red pt-3 pb-3">
     <div class="flex flex-col w-full">
       <div class="form-row">

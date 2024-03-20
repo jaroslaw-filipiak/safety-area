@@ -9,9 +9,11 @@
     <div class="brief-box__top">
       <div class="brief-box__top--title">{{ item.title }}</div>
       <div class="flex items-center justify-end gap-[60px]">
-        <div class="brief-box__top--remove">
+        <div
+          @click="store.removeFromCart(item.id)"
+          class="brief-box__top--remove cursor-pointer hover:opacity-75"
+        >
           <svg
-            @click="store.removeFromCart(item.id)"
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-trash stroke-gray"
             width="19"
