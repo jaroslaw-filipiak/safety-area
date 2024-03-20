@@ -6,6 +6,8 @@ export const useMainStore = defineStore('mainStore', {
     cart: [],
     isCartOpen: false,
     prepayment: false,
+    hugeOrderFrom: 2000,
+    bonusForHugeOrder: false,
     howManyFormsAreToClient: 0,
     howManyFormsAreFullyFilled: 0,
   }),
@@ -93,6 +95,13 @@ export const useMainStore = defineStore('mainStore', {
     getPrepayment: (state) => {
       return state.prepayment;
     },
+    getTotalPriceWithoutPrepaymentBonus: (state) => {
+      return state.cart
+        .reduce((acc, item) => {
+          return acc + Number(item.price);
+        }, 0)
+        .toFixed(2);
+    },
     getTotalPrice: (state) => {
       const total = state.cart
         .reduce((acc, item) => {
@@ -110,6 +119,17 @@ export const useMainStore = defineStore('mainStore', {
 
       const brutto = (total * 1.23).toFixed(2);
       return state.prepayment ? (brutto - brutto * 0.05).toFixed(2) : brutto;
+    },
+    toBonusForHugeOrder: (state) => {
+      if (state.getTotalPriceWithoutPrepaymentBonus >= state.hugeOrderFrom) {
+        state.bonusForHugeOrder = true;
+      } else {
+        state.bonusForHugeOrder = false;
+      }
+
+      const val =
+        state.hugeOrderFrom - state.getTotalPriceWithoutPrepaymentBonus;
+      return Number(val).toFixed(2);
     },
     areAllFormsFilled: (state) => {
       if (state.cart.length === 0) {

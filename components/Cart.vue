@@ -120,10 +120,27 @@
       </div>
     </header>
     <footer>
-      <div class="cart__discount pl-[23px] pr-[23px] pb-[20px]">
+      <div
+        class="cart__discount pl-[23px] pr-[23px] pb-[20px]"
+        v-if="!bonusForHugeOrder"
+      >
         <p class="text-gray text-[14px]">
-          Brakuje ci: <span class="text-white">300,- </span> do uzyskania
+          Brakuje ci:
+          <span class="text-white">{{ store.toBonusForHugeOrder }} PLN </span>
+          do uzyskania
           <span class="text-red">5% rabatu</span>
+        </p>
+      </div>
+
+      <div
+        class="cart__discount pl-[23px] pr-[23px] pb-[20px]"
+        v-if="bonusForHugeOrder"
+      >
+        <p class="text-gray text-[14px]">
+          Otrzymujesz: <span class="text-red">5% rabatu </span> za zakupy
+        </p>
+        <p>
+          powyżej <span class="text-white"> {{ hugeOrderFrom }} </span> PLN
         </p>
       </div>
       <!-- posiadasz kod rabatowy ? -->
@@ -330,7 +347,8 @@
 
   const store = useMainStore();
 
-  const { cart, isCartOpen } = storeToRefs(store);
+  const { cart, isCartOpen, bonusForHugeOrder, hugeOrderFrom } =
+    storeToRefs(store);
 
   const handleButtonValidation = () => {
     console.log('handleButtonValidation');
