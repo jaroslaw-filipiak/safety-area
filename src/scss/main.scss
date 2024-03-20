@@ -46,7 +46,7 @@ html.lenis {
 }
 
 .required-char {
-  @apply relative;
+  @apply relative text-[14px];
   &::after {
     content: '*';
     @apply text-red absolute -right-[12px] top-0;
