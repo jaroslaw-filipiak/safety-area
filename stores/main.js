@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
 export const useMainStore = defineStore('mainStore', {
   state: () => ({
@@ -13,8 +12,11 @@ export const useMainStore = defineStore('mainStore', {
 
   actions: {
     async fetchPricing() {
+      console.log('fetching pricing...');
+      const apiUrl = useRuntimeConfig().public.apiBaseUrl;
+      console.log(apiUrl);
       try {
-        const response = await fetch(`${BASE_URL}/wp-json/options/pricing`);
+        const response = await fetch(`${apiUrl}/wp-json/options/pricing`);
         const data = await response.json();
 
         this.pricing = data;
