@@ -114,8 +114,11 @@
           <div>
             <!-- !isBriefAccepted -->
             <span
-              class="h-[40px] rounded-[6px] flex items-center justify-between text-light text-[14px] cursor-pointer pl-[17px] pr-[17px]"
-              :class="{ 'bg-red': !isOpen, 'bg-green bg-opacity-50]': isOpen }"
+              class="h-[40px] rounded-[6px] flex items-center justify-between text-light text-[14px] cursor-pointer pl-[17px] pr-[17px] selection:bg-none"
+              :class="{
+                'bg-red': !isOpen,
+                'bg-green bg-opacity-50 selection:bg-none': isOpen,
+              }"
               v-if="!isBriefAccepted"
             >
               {{ !isOpen ? 'Wypełnij Brief' : 'Gotowe - zwiń kartę' }}
@@ -130,7 +133,10 @@
             <!-- isBriefAccepted -->
             <span
               class="h-[40px] rounded-[6px] flex items-center justify-between text-light text-[14px] cursor-pointer pl-[17px] pr-[17px]"
-              :class="{ 'bg-dark': !isOpen, 'bg-green bg-opacity-50]': isOpen }"
+              :class="{
+                'bg-dark': !isOpen,
+                'bg-green bg-opacity-50 selection:bg-none': isOpen,
+              }"
               v-if="isBriefAccepted"
             >
               {{ !isOpen ? 'Edytuj' : 'Gotowe - zwiń kartę' }}
