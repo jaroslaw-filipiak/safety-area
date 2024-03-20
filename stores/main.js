@@ -108,8 +108,22 @@ export const useMainStore = defineStore('mainStore', {
           return acc + Number(item.price);
         }, 0)
         .toFixed(2);
-      return state.prepayment ? (total - total * 0.05).toFixed(2) : total;
+
+      if (state.prepayment && !state.bonusForHugeOrder) {
+        console.log('only prepayment');
+        return (total - total * 0.05).toFixed(2);
+      } else if (state.bonusForHugeOrder && !state.prepayment) {
+        console.log('only bonusForHugeOrder');
+        return (total - total * 0.05).toFixed(2);
+      } else if (state.prepayment && state.bonusForHugeOrder) {
+        console.log('prepayment and bonusForHugeOrder');
+        return (total - total * 0.1).toFixed(2);
+      } else {
+        console.log('no bonus');
+        return total;
+      }
     },
+
     getTotalPriceBrutto: (state) => {
       const total = state.cart
         .reduce((acc, item) => {
@@ -118,7 +132,20 @@ export const useMainStore = defineStore('mainStore', {
         .toFixed(2);
 
       const brutto = (total * 1.23).toFixed(2);
-      return state.prepayment ? (brutto - brutto * 0.05).toFixed(2) : brutto;
+
+      if (state.prepayment && !state.bonusForHugeOrder) {
+        console.log('only prepayment');
+        return (brutto - brutto * 0.05).toFixed(2);
+      } else if (state.bonusForHugeOrder && !state.prepayment) {
+        console.log('only bonusForHugeOrder');
+        return (brutto - brutto * 0.05).toFixed(2);
+      } else if (state.prepayment && state.bonusForHugeOrder) {
+        console.log('prepayment and bonusForHugeOrder');
+        return (brutto - brutto * 0.1).toFixed(2);
+      } else {
+        console.log('no bonus');
+        return brutto;
+      }
     },
     toBonusForHugeOrder: (state) => {
       if (state.getTotalPriceWithoutPrepaymentBonus >= state.hugeOrderFrom) {
