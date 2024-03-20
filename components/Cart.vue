@@ -175,6 +175,11 @@
       <div class="mb-[24px] pl-[17px] pr-[23px] relative">
         <div
           class="bg-darkMain flex items-center justify-between rounded-[4px] h-[52px] pl-[20px] pr-[15px]"
+          :class="
+            prepaymentChecked
+              ? 'border border-green accent-green'
+              : 'border-transparent'
+          "
         >
           <div class="flex items-center">
             <input

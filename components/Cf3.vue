@@ -53,7 +53,6 @@ s -->
     return match ? parseInt(match[0]) : null;
   };
 
-  // TODO: to id musi byc zaciągane dynamicznie
   const ID = getComponentNumber(componentName);
 
   // Check if form is fully filled

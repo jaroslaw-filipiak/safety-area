@@ -1,13 +1,5 @@
 <template>
   <section class="lg:mt-[140px] 2xl:mt-[240px] max-lg:w-full">
-    <pre>
-        <!-- <code>{{ filteredItems ? filteredItems : 'brak..' }}</code> -->
-        <!-- <code>{{ searchTerm.length }}</code> -->
-        <!-- <code>{{ selectedItems }}</code> -->
-         <!-- <code>{{ pricing }}</code>  -->
-
-        </pre>
-
     <p
       class="text-light text-[18px] lg:text-[20px] text-center mb-5 mt-5 lg:mt-0"
     >
@@ -47,10 +39,16 @@
 
       <!-- results -->
       <div v-if="searchTerm.length || showList" class="results__wrapper">
-        <ul @change="store.updateCart(selectedItems)" class="bg-dark3">
+        <ul
+          @change="
+            store.updateCart(selectedItems);
+            showList = false;
+          "
+          class="bg-dark3"
+        >
           <li
             v-for="item in store.filteredItems(searchTerm)"
-            class="flex items-center justify-between"
+            class="flex items-center justify-between pr-[13px] lg:pr-[28px] border-b-[1px] border-b-dark"
           >
             <div class="flex items-center w-full">
               <label
@@ -60,7 +58,7 @@
                 <input
                   :id="item.id"
                   :name="item.title"
-                  class="hidden lg:flex"
+                  class="hidden lg:flex accent-red"
                   :value="item"
                   type="checkbox"
                   v-model="selectedItems"
@@ -108,33 +106,23 @@
 
 <script setup>
   import { ref } from 'vue';
+
   const store = useMainStore();
   const searchTerm = ref('');
   const selectedItems = ref([]);
   const showList = ref(false);
-
-  const { cart } = store;
 
   watch(selectedItems, (newSelectedItems) => {
     console.log('selected items changed... updating cart');
     store.updateCart(newSelectedItems);
   });
 
-  // Watch for changes in the cart state
   watch(
     () => store.cart,
     (newCart) => {
       selectedItems.value = newCart;
     }
   );
-
-  //   const filteredItems = computed(() =>
-  //     items.value.filter(
-  //       (item) =>
-  //         item.title &&
-  //         item.title.toLowerCase().includes(searchTerm.value.toLowerCase())
-  //     )
-  //   );
 </script>
 
 <style lang="scss" scoped>

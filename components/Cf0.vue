@@ -50,10 +50,22 @@ s -->
   import { ref, computed } from 'vue';
 
   const store = useMainStore();
-  const ID = 0;
   const isFullyFilled = ref(false);
   const businessCardType = ref('');
   const businessCardWeight = ref('');
+
+  // Get the file path dynamically
+  const filePath = import.meta.url;
+
+  // Extract the component name from the file path
+  const componentName = filePath.split('/').pop().split('.')[0];
+  const getComponentNumber = (componentName) => {
+    const regex = /\d+/;
+    const match = componentName.match(regex);
+    return match ? parseInt(match[0]) : null;
+  };
+
+  const ID = getComponentNumber(componentName);
 
   // Check if form is fully filled
   const areAllFieldsFilled = computed(() => {

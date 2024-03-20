@@ -1,5 +1,11 @@
 <template>
-  <div class="brief-box" :id="item.id">
+  <div
+    class="brief-box"
+    :id="item.id"
+    :class="{
+      'brief-box--accepted': isBriefAccepted,
+    }"
+  >
     <div class="brief-box__top">
       <div class="brief-box__top--title">{{ item.title }}</div>
       <div class="flex items-center justify-end gap-[60px]">
@@ -81,8 +87,18 @@
           </div>
           <div class="brief-box__accept flex items-center">
             <div>
-              <label for="accept-terms" class="flex items-center gap-5">
-                <input id="accept-terms" name="accept-terms" type="checkbox" />
+              <label
+                :for="`accept-terms-for-${item.id}`"
+                class="flex items-center gap-5 cursor-pointer"
+              >
+                <!-- @change="store.addBriefAccepted(item.id)" -->
+                <input
+                  class="accent-green"
+                  v-model="accepted"
+                  :id="`accept-terms-for-${item.id}`"
+                  :name="`accept-terms-for-${item.id}`"
+                  type="checkbox"
+                />
                 <p class="required-char">Zaakceptuj</p>
               </label>
             </div>
@@ -140,8 +156,25 @@
 
 <script setup>
   const isOpen = ref(false);
+  const accepted = ref(false);
+  const store = useMainStore();
   const props = defineProps({
     item: Object,
+  });
+
+  watch(accepted, (value) => {
+    console.log('accepted change..');
+    value
+      ? store.addBriefAccepted(props.item.id)
+      : store.removeBriefAccepted(props.item.id);
+  });
+
+  const isBriefAccepted = computed(() => {
+    console.log('isBriefAccepted change..');
+    console.log(props.item.id);
+    return store.cart.some(
+      (cartItem) => cartItem.id === props.item.id && cartItem.briefAccepted
+    );
   });
 </script>
 
@@ -191,6 +224,10 @@
 
     &__fill-brief {
       @apply h-[40px] rounded-[6px] flex items-center justify-between text-light text-[14px] cursor-pointer pl-[17px] pr-[17px];
+    }
+
+    &--accepted {
+      @apply border-green;
     }
   }
 </style>

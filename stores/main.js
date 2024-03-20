@@ -29,6 +29,27 @@ export const useMainStore = defineStore('mainStore', {
       this.cart?.length ? (this.isCartOpen = true) : (this.isCartOpen = false);
       this.howManyFormsAreToClient = this.cart.length;
     },
+    addBriefAccepted(payload) {
+      console.log('addBriefAccepted');
+      const id = payload;
+      console.log(id);
+      this.cart = this.cart.map((item) => {
+        if (item.id === id) {
+          item.briefAccepted = true;
+        }
+        return item;
+      });
+    },
+    removeBriefAccepted(payload) {
+      console.log('removeBriefAccepted');
+      const id = payload;
+      this.cart = this.cart.map((item) => {
+        if (item.id === id) {
+          item.briefAccepted = false;
+        }
+        return item;
+      });
+    },
     addFormFilled(payload) {
       console.log('addFormFilled');
       console.log(payload);
