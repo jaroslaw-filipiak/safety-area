@@ -95,6 +95,13 @@ export const useMainStore = defineStore('mainStore', {
     getPrepayment: (state) => {
       return state.prepayment;
     },
+    getTotalPrice: (state) => {
+      return state.cart
+        .reduce((acc, item) => {
+          return acc + Number(item.price);
+        }, 0)
+        .toFixed(2);
+    },
     areAllFormsFilled: (state) => {
       if (state.cart.length === 0) {
         return false;

@@ -173,78 +173,88 @@
 
       <!-- przedpłata -->
       <div class="mb-[24px] pl-[17px] pr-[23px] relative">
-        <div
-          class="bg-darkMain flex items-center justify-between rounded-[4px] h-[52px] pl-[20px] pr-[15px]"
-          :class="
-            prepaymentChecked
-              ? 'border border-green accent-green'
-              : 'border-transparent'
-          "
-        >
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              @change="store.updatePrepayment(prepaymentChecked)"
-              v-model="prepaymentChecked"
-            />
-            <p class="text-[16px] font-medium text-light pl-[21px]">
-              <span class="text-red">+5% rabatu</span>
-              za przedpłatę?
-            </p>
-          </div>
-          <div>
-            <svg
-              id="i"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-            >
-              <g
-                id="Ellipse_4"
-                data-name="Ellipse 4"
-                fill="none"
-                stroke="#f9f2e5"
-                stroke-width="1.5"
+        <label for="prepayment" class="block cursor-pointer">
+          <div
+            class="bg-darkMain flex items-center justify-between rounded-[4px] h-[52px] pl-[20px] pr-[15px]"
+            :class="
+              prepaymentChecked
+                ? 'border border-green accent-green'
+                : 'border-transparent'
+            "
+          >
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                name="prepayment"
+                id="prepayment"
+                @change="store.updatePrepayment(prepaymentChecked)"
+                v-model="prepaymentChecked"
+              />
+              <p
+                class="text-[16px] font-medium text-light pl-[21px] selection:bg-none"
               >
-                <circle cx="10" cy="10" r="10" stroke="none" />
-                <circle cx="10" cy="10" r="9.25" fill="none" />
-              </g>
-              <line
-                id="Line_33"
-                data-name="Line 33"
-                y2="5.676"
-                transform="translate(10.406 9.149)"
-                fill="none"
-                stroke="#f9f2e5"
-                stroke-width="1.5"
-              />
-              <line
-                id="Line_34"
-                data-name="Line 34"
-                y2="1.703"
-                transform="translate(10.406 5.175)"
-                fill="none"
-                stroke="#f9f2e5"
-                stroke-width="1.5"
-              />
-            </svg>
+                <span class="text-red">+5% rabatu</span>
+                za przedpłatę?
+              </p>
+            </div>
+
+            <div>
+              <svg
+                id="i"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+              >
+                <g
+                  id="Ellipse_4"
+                  data-name="Ellipse 4"
+                  fill="none"
+                  stroke="#f9f2e5"
+                  stroke-width="1.5"
+                >
+                  <circle cx="10" cy="10" r="10" stroke="none" />
+                  <circle cx="10" cy="10" r="9.25" fill="none" />
+                </g>
+                <line
+                  id="Line_33"
+                  data-name="Line 33"
+                  y2="5.676"
+                  transform="translate(10.406 9.149)"
+                  fill="none"
+                  stroke="#f9f2e5"
+                  stroke-width="1.5"
+                />
+                <line
+                  id="Line_34"
+                  data-name="Line 34"
+                  y2="1.703"
+                  transform="translate(10.406 5.175)"
+                  fill="none"
+                  stroke="#f9f2e5"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
+        </label>
       </div>
       <!-- przedplata -->
 
       <div class="cart__footer bg-dark p-[23px]">
         <div class="text-gray text-[14px] flex justify-end mb-[3px]">
-          3 154,95 PLN brutto
+          {{ store.getTotalPrice * 1.23 }} PLN brutto
         </div>
         <div class="flex items-end justify-between">
           <div class="text-[16px] text-light">Razem:</div>
           <div class="flex items-end gap-[12px]">
-            <div class="text-[12px] text-red line-through relative -top-[5px]">
+            <!-- TODO: -->
+            <!-- <div class="text-[12px] text-red line-through relative -top-[5px]">
               2700 PLN
+            </div> -->
+            <div class="text-[22px] text-light">
+              {{ store.getTotalPrice }} PLN netto
             </div>
-            <div class="text-[22px] text-light">2565 PLN netto</div>
           </div>
         </div>
 
