@@ -19,11 +19,13 @@ export const useMainStore = defineStore('mainStore', {
 
   actions: {
     async fetchPricing() {
+      const baseUrl = `${import.meta.env.VITE_BASE_URL}`;
+      console.log(baseUrl);
       const apiUrl = useRuntimeConfig().public.apiBaseUrl;
       console.log(apiUrl);
       try {
         const response = await fetch(
-          `https://j-filipiak.pl/clients/grafikonline//wp-json/options/pricing`
+          `https://j-filipiak.pl/clients/grafikonline/wp-json/options/pricing`
         );
         const data = await response.json();
 
@@ -35,7 +37,7 @@ export const useMainStore = defineStore('mainStore', {
     async checkDiscountCode(payload) {
       try {
         const response = await fetch(
-          `http://grafikonline.test/wp-json/options/rabats/${payload}`
+          `https://j-filipiak.pl/clients/grafikonline/wp-json/options/rabats/${payload}`
         );
         const data = await response.json();
 
