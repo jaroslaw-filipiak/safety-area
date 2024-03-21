@@ -144,7 +144,7 @@
         </p>
       </div>
 
-      <!-- posiadasz kod rabatowy ? -->
+      <!-- posiadasz kod rabatowy ?    v-if="!discoundCode.active || discoundCode.active === null"-->
       <div class="mb-[12px] pl-[17px] pr-[23px] relative">
         <input
           :disabled="discoundCode.active"
@@ -155,7 +155,11 @@
             'border-dark': !discoundCode.active === null,
             'border-red': discoundCode.active === false,
           }"
-          placeholder="Posiadasz kod rabatowy ?"
+          :placeholder="
+            discoundCode.active
+              ? `${discoundCode.code}`
+              : 'Posiadasz kod rabatowy ?'
+          "
           type="text"
         />
         <button

@@ -150,21 +150,28 @@ export const useMainStore = defineStore('mainStore', {
         }, 0)
         .toFixed(2);
 
+      let res = total;
+
       if (state.prepayment && !state.bonusForHugeOrder) {
         console.log('only prepayment');
-        return (total - total * 0.05).toFixed(2);
+        res = (total - total * 0.05).toFixed(2);
       } else if (state.bonusForHugeOrder && !state.prepayment) {
         console.log('only bonusForHugeOrder');
-        return (total - total * 0.05).toFixed(2);
+        res = (total - total * 0.05).toFixed(2);
       } else if (state.prepayment && state.bonusForHugeOrder) {
         console.log('prepayment and bonusForHugeOrder');
-        return (total - total * 0.1).toFixed(2);
+        res = (total - total * 0.1).toFixed(2);
       } else {
         console.log('no bonus');
-        return total;
+        res = total;
       }
-    },
 
+      if (state.discoundCode.active) {
+        res = (res - res * (state.discoundCode.discount / 100)).toFixed(2);
+      }
+
+      return res;
+    },
     getTotalPriceBrutto: (state) => {
       const total = state.cart
         .reduce((acc, item) => {
