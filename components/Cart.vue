@@ -143,14 +143,24 @@
           powyżej <span class="text-white"> {{ hugeOrderFrom }} </span> PLN
         </p>
       </div>
+
       <!-- posiadasz kod rabatowy ? -->
       <div class="mb-[12px] pl-[17px] pr-[23px] relative">
         <input
-          class="w-full pl-[20px] rounded-[8px] border-[2px] border-dark bg-darkMain h-[60px] placeholder-gray placeholder-[14px] text-[14px]"
+          :disabled="discoundCode.active"
+          v-model="code"
+          class="w-full pl-[20px] rounded-[8px] border-[2px] border-dark bg-darkMain h-[60px] placeholder-gray placeholder-[14px] text-[14px] disabled:text-green disabled:placeholder:text-green disabled:selection:bg-none"
+          :class="{
+            'border-green': discoundCode.active,
+            'border-dark': !discoundCode.active === null,
+            'border-red': discoundCode.active === false,
+          }"
           placeholder="Posiadasz kod rabatowy ?"
           type="text"
         />
         <button
+          v-if="!discoundCode.active === true"
+          @click="store.checkDiscountCode(code)"
           class="absolute w-[44px] h-[44px] bg-dark rounded-full right-[30px] top-[50%] -translate-y-[50%] flex items-center justify-center hover:bg-red transition-all"
         >
           <svg
@@ -186,6 +196,16 @@
             ></path>
           </svg>
         </button>
+      </div>
+      <div
+        v-if="discoundCode.active === false"
+        class="pl-[17px] pr-[23px] mb-3"
+      >
+        Wprowadzony kod jest <span class="text-red">nieprawidłowy</span>
+      </div>
+      <div v-if="discoundCode.active" class="pl-[17px] pr-[23px] mb-3">
+        <span class="text-green">Sukces! </span>zastosowano kod:
+        {{ discoundCode.code }} wartość rabatu: {{ discoundCode.discount }} %
       </div>
 
       <!-- przedpłata -->
@@ -265,10 +285,12 @@
         <div class="flex items-end justify-between">
           <div class="text-[16px] text-light">Razem:</div>
           <div class="flex items-end gap-[12px]">
-            <!-- TODO: -->
-            <!-- <div class="text-[12px] text-red line-through relative -top-[5px]">
-              2700 PLN
-            </div> -->
+            <div
+              v-if="store.hasAtleastOneDiscount"
+              class="text-[12px] text-red line-through relative -top-[5px]"
+            >
+              {{ store.getTotalPriceWithoutAnyBonus }} PLN
+            </div>
             <div class="text-[22px] text-light">
               {{ store.getTotalPrice }} PLN netto
             </div>
@@ -344,10 +366,11 @@
 
   const prepaymentChecked = ref(false);
   const showValidationWarning = ref(false);
+  const code = ref('');
 
   const store = useMainStore();
 
-  const { cart, isCartOpen, bonusForHugeOrder, hugeOrderFrom } =
+  const { cart, isCartOpen, bonusForHugeOrder, hugeOrderFrom, discoundCode } =
     storeToRefs(store);
 
   const handleButtonValidation = () => {

@@ -10,6 +10,11 @@ export const useMainStore = defineStore('mainStore', {
     bonusForHugeOrder: false,
     howManyFormsAreToClient: 0,
     howManyFormsAreFullyFilled: 0,
+    discoundCode: {
+      code: '',
+      discount: 0,
+      active: null,
+    },
   }),
 
   actions: {
@@ -23,6 +28,27 @@ export const useMainStore = defineStore('mainStore', {
         const data = await response.json();
 
         this.pricing = data;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async checkDiscountCode(payload) {
+      try {
+        const response = await fetch(
+          `http://grafikonline.test/wp-json/options/rabats/${payload}`
+        );
+        const data = await response.json();
+
+        if (data?.data?.status === 404) {
+          this.discoundCode.active = false;
+        } else if (data?.data?.status === 200) {
+          const code = data?.data?.result;
+
+          this.discoundCode.active = true;
+          this.discoundCode.code = code.kod;
+          this.discoundCode.discount = code.wartosc_rabatu;
+          // TODO: on backend change field to english to english
+        }
       } catch (e) {
         console.error(e);
       }
@@ -94,6 +120,21 @@ export const useMainStore = defineStore('mainStore', {
     },
     getPrepayment: (state) => {
       return state.prepayment;
+    },
+    hasAtleastOneDiscount: (state) => {
+      return (
+        state.prepayment ||
+        state.bonusForHugeOrder ||
+        state.discoundCode.active ||
+        false
+      );
+    },
+    getTotalPriceWithoutAnyBonus: (state) => {
+      return state.cart
+        .reduce((acc, item) => {
+          return acc + Number(item.price);
+        }, 0)
+        .toFixed(2);
     },
     getTotalPriceWithoutPrepaymentBonus: (state) => {
       return state.cart
