@@ -305,6 +305,7 @@
 
         <div @mouseenter="handleButtonValidation" class="relative mt-[27px]">
           <button
+            @click="gotoBillingDetails"
             :disabled="!store.areAllFormsFilled"
             class="text-darkMain font-medium text-[16px] h-[75px] rounded-[38px] w-full relative"
             :class="
@@ -373,6 +374,11 @@
   const code = ref('');
 
   const store = useMainStore();
+
+  const gotoBillingDetails = () => {
+    store.showBillingDetails();
+    store.toggleCartVisibility();
+  };
 
   const { cart, isCartOpen, bonusForHugeOrder, hugeOrderFrom, discoundCode } =
     storeToRefs(store);

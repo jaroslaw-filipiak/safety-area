@@ -15,6 +15,10 @@ export const useMainStore = defineStore('mainStore', {
       discount: 0,
       active: null,
     },
+    hasBackdrop: false,
+    isBillingDetailsVisible: false,
+    isNewClientFormVisible: false,
+    isRegularClientFormVisible: false,
   }),
 
   actions: {
@@ -110,6 +114,42 @@ export const useMainStore = defineStore('mainStore', {
       console.log('removing from cart...');
       this.cart = this.cart.filter((item) => item.id !== id);
       this.howManyFormsAreToClient = this.cart.length;
+    },
+    showBillingDetails() {
+      console.log('showBillingDetails ');
+      this.isBillingDetailsVisible = true;
+      this.hasBackdrop = true;
+    },
+    showNewClientForm() {
+      this.isNewClientFormVisible = true;
+      this.isBillingDetailsVisible = false;
+      this.isRegularClientFormVisible = false;
+    },
+    showRegularClientForm() {
+      this.isNewClientFormVisible = false;
+      this.isBillingDetailsVisible = false;
+      this.isRegularClientFormVisible = true;
+    },
+    closeBillingDetails() {
+      console.log('closeBillingDetails ');
+      this.isBillingDetailsVisible = false;
+      this.hasBackdrop = false;
+      this.isCartOpen = true;
+    },
+    closeNewClientForm() {
+      console.log('closeNewClientForm ');
+      this.isNewClientFormVisible = false;
+      this.hasBackdrop = false;
+      this.isCartOpen = true;
+    },
+    closeRegularClientForm() {
+      console.log('closeRegularClientForm ');
+      this.isRegularClientFormVisible = false;
+      this.hasBackdrop = false;
+      this.isCartOpen = true;
+    },
+    toggleCartVisibility() {
+      this.isCartOpen = !this.isCartOpen;
     },
   },
   getters: {
