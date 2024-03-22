@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    baseURL: '/clients/grafikonline/safety-area/',
+    // baseURL: '/clients/grafikonline/safety-area/',
     // buildAssetsDir: '/mydir/_nuxt/',
   },
   devtools: { enabled: true },
