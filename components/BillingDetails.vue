@@ -73,13 +73,19 @@
           class="flex flex-col sm:flex-row items-center justify-center gap-5 w-full"
         >
           <button
-            @click="store.showNewClientForm()"
+            @click="
+              store.showNewClientForm();
+              formStore.updateFormField('client_type', 'new');
+            "
             class="window__btn window__btn--new-client"
           >
             Jestem nowym klientem
           </button>
           <button
-            @click="store.showRegularClientForm()"
+            @click="
+              store.showRegularClientForm();
+              formStore.updateFormField('client_type', 'regular');
+            "
             class="window__btn window__btn--regular-client"
           >
             Jestem stałym klientem
@@ -92,6 +98,7 @@
 
 <script setup>
   const store = useMainStore();
+  const formStore = useFormStore();
   const hasBackdrop = computed(() => store.hasBackdrop);
 
   const { isBillingDetailsVisible } = storeToRefs(store);

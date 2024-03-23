@@ -75,6 +75,12 @@
               <label for="name_surname">
                 <p>Nazwa Firmy</p>
                 <input
+                  @input="
+                    formStore.updateFormField(
+                      'company_name',
+                      $event.target.value
+                    )
+                  "
                   v-model="company_name"
                   name="company_name"
                   id="company_name"
@@ -145,6 +151,7 @@
 
 <script setup>
   const store = useMainStore();
+  const formStore = useFormStore();
   const hasBackdrop = computed(() => store.hasBackdrop);
 
   const { isRegularClientFormVisible } = storeToRefs(store);

@@ -75,6 +75,12 @@
               <label for="name_surname">
                 <p>Imię i nazwisko</p>
                 <input
+                  @input="
+                    formStore.updateFormField(
+                      'name_surname',
+                      $event.target.value
+                    )
+                  "
                   v-model="name_surname"
                   name="name_surname"
                   id="name_surname"
@@ -86,6 +92,12 @@
               <label for="company_name">
                 <p>Nazwa firmy</p>
                 <input
+                  @input="
+                    formStore.updateFormField(
+                      'company_name',
+                      $event.target.value
+                    )
+                  "
                   v-model="company_name"
                   name="company_name"
                   id="company_name"
@@ -101,6 +113,9 @@
               <label for="nip">
                 <p>NIP</p>
                 <input
+                  @change="
+                    formStore.updateFormField('nip', $event.target.value)
+                  "
                   v-model="nip"
                   name="nip"
                   id="nip"
@@ -112,6 +127,9 @@
               <label for="city">
                 <p>Miejscowość</p>
                 <input
+                  @input="
+                    formStore.updateFormField('city', $event.target.value)
+                  "
                   v-model="city"
                   name="city"
                   id="city"
@@ -127,6 +145,12 @@
               <label for="postal_code">
                 <p>Kod Pocztowy</p>
                 <input
+                  @change="
+                    formStore.updateFormField(
+                      'postal_code',
+                      $event.target.value
+                    )
+                  "
                   v-model="postal_code"
                   name="postal_code"
                   id="postal_code"
@@ -138,6 +162,9 @@
               <label for="street">
                 <p>Ulica</p>
                 <input
+                  @change="
+                    formStore.updateFormField('street', $event.target.value)
+                  "
                   v-model="street"
                   name="street"
                   id="street"
@@ -153,6 +180,9 @@
               <label for="email">
                 <p>Adres e-mail</p>
                 <input
+                  @change="
+                    formStore.updateFormField('email', $event.target.value)
+                  "
                   v-model="email"
                   name="email"
                   id="email"
@@ -164,6 +194,9 @@
               <label for="phone">
                 <p>Numer Telefonu</p>
                 <input
+                  @change="
+                    formStore.updateFormField('phone', $event.target.value)
+                  "
                   v-model="phone"
                   name="phone"
                   id="phone"
@@ -222,15 +255,21 @@
             <div class="window__accept flex items-center">
               <div>
                 <label
-                  :for="`accept-terms-for-privacy-policy`"
+                  :for="privacy_policy_accepted"
                   class="flex items-center gap-5 cursor-pointer"
                 >
                   <!-- @change="store.addBriefAccepted(item.id)" -->
                   <input
+                    @change="
+                      formStore.updateFormField(
+                        'privacy_policy_accepted',
+                        acceptedPrivacyPolicy
+                      )
+                    "
                     class="accent-green"
                     v-model="acceptedPrivacyPolicy"
-                    :id="`accept-terms-for-privacy-policy`"
-                    :name="`accept-terms-for-privacy-policy`"
+                    :id="privacy_policy_accepted"
+                    :name="privacy_policy_accepted"
                     type="checkbox"
                   />
                   <p class="required-char selection:bg-none">Zaakceptuj</p>
@@ -243,10 +282,14 @@
             @click="isOpen = !isOpen"
             class="window__fill-brief flex items-center justify-between mt-10 md:mt-0"
           >
-            <div>
+            <button
+              :disabled="!acceptedPrivacyPolicy"
+              class="disabled:pointer-events-none group"
+              @click="submit"
+            >
               <!-- !isBriefAccepted -->
               <span
-                class="flex items-center justify-between text-light text-[14px] cursor-pointer pl-[24px] pr-[24px] selection:bg-none bg-red rounded-full h-[50px] min-w-[188px] hover:opacity-90 transition-all"
+                class="flex items-center justify-between text-light text-[14px] cursor-pointer pl-[24px] pr-[24px] selection:bg-none bg-red rounded-full h-[50px] min-w-[188px] hover:opacity-90 transition-all group-disabled:bg-dark group-disabled:opacity-50"
               >
                 Zamawiam
                 <span class="pl-4">
@@ -265,7 +308,7 @@
                   </svg>
                 </span>
               </span>
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -275,13 +318,25 @@
 
 <script setup>
   const store = useMainStore();
+  const formStore = useFormStore();
   const hasBackdrop = computed(() => store.hasBackdrop);
   const acceptedPrivacyPolicy = ref(false);
 
   const { isNewClientFormVisible } = storeToRefs(store);
+  const { privacy_policy_accepted } = formStore;
 
   const closeNewClientFormWindow = () => {
     store.closeNewClientForm();
+  };
+
+  watch(acceptedPrivacyPolicy, (value) => {
+    acceptedPrivacyPolicy.value = value;
+  });
+
+  const submit = () => {
+    formStore.getFormsInfo.map((item) => {
+      formStore.sendForm(item.form_id_feedback);
+    });
   };
 </script>
 

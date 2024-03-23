@@ -1,9 +1,9 @@
 <!-- TODO: disable validaton on backend: https://contactform7.com/configuration-validator-faq/ -->
 
 <!-- 
-"title": "Projekt wizyt\u00f3wki firmowej",
+ title": "Projekt wizytówki firmowej",
  "id": 0
- [contact-form-7 id="b5c39b1" title="Projekt wizytówki firmowej"]
+[contact-form-7 id="b5c39b1" title="Projekt wizytówki firmowej"]
  _wpcf7_unit_tag: wpcf7-f68-p66-o1
  http://grafikonline.test/wp-json/contact-form-7/v1/contact-forms/65/feedback
 s -->
@@ -15,6 +15,13 @@ s -->
         <label for="business_card_type">
           <p>Czy wizytówka powinna być tłoczona ?</p>
           <input
+            @input="
+              formStore.updateFormField(
+                'business_card_type',
+                'cf7_68',
+                $event.target.value
+              )
+            "
             v-model="businessCardType"
             name="business_card_type"
             id="business_card_type"
@@ -28,6 +35,13 @@ s -->
         <label for="business_card_weight">
           <p>Podaj gramature papieru</p>
           <input
+            @input="
+              formStore.updateFormField(
+                'business_card_weight',
+                'cf7_68',
+                $event.target.value
+              )
+            "
             v-model="businessCardWeight"
             name="business_card_weight"
             id="business_card_weight"
@@ -45,7 +59,9 @@ s -->
   import { ref, computed } from 'vue';
 
   const store = useMainStore();
+  const formStore = useFormStore();
   const isFullyFilled = ref(false);
+
   const businessCardType = ref('');
   const businessCardWeight = ref('');
 
@@ -75,6 +91,8 @@ s -->
   watch(isFullyFilled, (value) => {
     value ? store.addFormFilled(ID) : store.removeFormFilled(ID);
   });
+
+  const { client_type, business_card_type, business_card_weight } = formStore;
 </script>
 
 <style lang="scss" scoped>

@@ -8,6 +8,7 @@
   import { onMounted } from 'vue';
   // import { useMainStore } from './stores/main';
   const store = useMainStore();
+  const formStore = useFormStore();
 
   onMounted(() => {
     document.body.classList.add('dark');
