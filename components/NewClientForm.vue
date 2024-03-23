@@ -67,8 +67,11 @@
           </svg>
         </div>
       </div>
-      <div class="window__content">
-        <div class="form-wrapper flex w-full border-red pt-3 pb-3">
+      <div class="window__content transition-all">
+        <div
+          v-if="!sending"
+          class="form-wrapper flex w-full border-red pt-3 pb-3"
+        >
           <div class="flex flex-col w-full">
             <!-- row name_surname + company_name -->
             <div class="form-row">
@@ -78,6 +81,7 @@
                   @input="
                     formStore.updateFormField(
                       'name_surname',
+                      'client',
                       $event.target.value
                     )
                   "
@@ -95,6 +99,7 @@
                   @input="
                     formStore.updateFormField(
                       'company_name',
+                      'client',
                       $event.target.value
                     )
                   "
@@ -114,7 +119,11 @@
                 <p>NIP</p>
                 <input
                   @change="
-                    formStore.updateFormField('nip', $event.target.value)
+                    formStore.updateFormField(
+                      'nip',
+                      'client',
+                      $event.target.value
+                    )
                   "
                   v-model="nip"
                   name="nip"
@@ -128,7 +137,11 @@
                 <p>Miejscowość</p>
                 <input
                   @input="
-                    formStore.updateFormField('city', $event.target.value)
+                    formStore.updateFormField(
+                      'city',
+                      'client',
+                      $event.target.value
+                    )
                   "
                   v-model="city"
                   name="city"
@@ -148,6 +161,7 @@
                   @change="
                     formStore.updateFormField(
                       'postal_code',
+                      'client',
                       $event.target.value
                     )
                   "
@@ -163,7 +177,11 @@
                 <p>Ulica</p>
                 <input
                   @change="
-                    formStore.updateFormField('street', $event.target.value)
+                    formStore.updateFormField(
+                      'street',
+                      'client',
+                      $event.target.value
+                    )
                   "
                   v-model="street"
                   name="street"
@@ -181,7 +199,11 @@
                 <p>Adres e-mail</p>
                 <input
                   @change="
-                    formStore.updateFormField('email', $event.target.value)
+                    formStore.updateFormField(
+                      'email',
+                      'client',
+                      $event.target.value
+                    )
                   "
                   v-model="email"
                   name="email"
@@ -195,7 +217,11 @@
                 <p>Numer Telefonu</p>
                 <input
                   @change="
-                    formStore.updateFormField('phone', $event.target.value)
+                    formStore.updateFormField(
+                      'phone',
+                      'client',
+                      $event.target.value
+                    )
                   "
                   v-model="phone"
                   name="phone"
@@ -208,7 +234,20 @@
             </div>
           </div>
         </div>
+        <div v-if="response" class="pt-3 pb-3 w-full">
+          <p
+            class="fluid-text-2xl"
+            :class="{
+              'text-red': response?.data?.status === 400,
+              'text-green': response?.data?.status === 200,
+            }"
+          >
+            {{ response?.message }}
+          </p>
+          <p class="fluid-text-lg">{{ response?.data?.status }}</p>
+        </div>
       </div>
+
       <div class="window__bottom">
         <div class="separator border-t-[1px] border-dark mb-6"></div>
         <div class="flex flex-col md:flex-row items-center justify-between">
@@ -263,6 +302,7 @@
                     @change="
                       formStore.updateFormField(
                         'privacy_policy_accepted',
+                        'client',
                         acceptedPrivacyPolicy
                       )
                     "
@@ -324,6 +364,9 @@
 
   const { isNewClientFormVisible } = storeToRefs(store);
   const { privacy_policy_accepted } = formStore;
+
+  const sending = computed(() => formStore.sending);
+  const response = computed(() => formStore.response);
 
   const closeNewClientFormWindow = () => {
     store.closeNewClientForm();

@@ -3,18 +3,23 @@ import { useMainStore } from './main';
 
 export const useFormStore = defineStore('formStore', {
   state: () => ({
-    order_id: '',
+    sending: false,
+    order_id: 'test#1',
     // ========= last step client data
-    client_type: '', // 'new' || 'regular'
-    name_surname: '',
-    company_name: '',
-    nip: '',
-    city: '',
-    postal_code: '',
-    street: '',
-    email: '',
-    phone: '',
-    privacy_policy_accepted: false,
+    client: {
+      client_type: '', // 'new' || 'regular'
+      name_surname: '',
+      company_name: '',
+      nip: '',
+      city: '',
+      postal_code: '',
+      street: '',
+      email: '',
+      phone: '',
+      privacy_policy_accepted: false,
+    },
+    response: {},
+    message: null,
 
     /*
      *title": "Projekt wizytówki firmowej",
@@ -22,6 +27,7 @@ export const useFormStore = defineStore('formStore', {
      *"formid": 68
      */
     cf7_68: {
+      _wpcf7_unit_tag: 'wpcf7-f68-p66-o1',
       business_card_type: '',
       business_card_weight: '',
     },
@@ -49,10 +55,20 @@ export const useFormStore = defineStore('formStore', {
       const formID = payload;
       const formData = new FormData();
       const cf7Data = this[`cf7_${formID}`];
+      const cart = JSON.stringify(useMainStore().cart);
 
       for (const key in cf7Data) {
         formData.append(key, cf7Data[key]);
       }
+
+      for (const key in this.client) {
+        formData.append(key, this.client[key]);
+      }
+
+      formData.append('order_id', this.order_id);
+      formData.append('cart', cart);
+
+      this.sending = true;
 
       try {
         const response = await fetch(
@@ -63,7 +79,14 @@ export const useFormStore = defineStore('formStore', {
           }
         );
         const data = await response.json();
+        this.response = data;
         console.log(data);
+
+        if (data.status === 'mail_sent') {
+          setTimeout(() => {
+            window.location.href = 'http://grafikonline.test/podziekowanie/';
+          }, 2000);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -73,7 +96,8 @@ export const useFormStore = defineStore('formStore', {
     },
     updateFormField(field, formObj, value) {
       console.log('update field', field, value);
-      this[formObj][field] = value;
+      console.log('formObj', formObj);
+      formObj ? (this[formObj][field] = value) : (this[field] = value);
     },
   },
   getters: {
@@ -89,6 +113,9 @@ export const useFormStore = defineStore('formStore', {
           form_id_feedback: item.form_id_feedback,
         };
       });
+    },
+    getSendingStatus: (state) => {
+      return state.sending;
     },
     // getFormForEachID: (state) => {
     //   const mainStore = useMainStore();

@@ -75,7 +75,7 @@
           <button
             @click="
               store.showNewClientForm();
-              formStore.updateFormField('client_type', 'new');
+              formStore.updateFormField('client_type', 'client', 'new');
             "
             class="window__btn window__btn--new-client"
           >
@@ -84,7 +84,7 @@
           <button
             @click="
               store.showRegularClientForm();
-              formStore.updateFormField('client_type', 'regular');
+              formStore.updateFormField('client_type', 'client', 'regular');
             "
             class="window__btn window__btn--regular-client"
           >
