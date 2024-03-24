@@ -234,7 +234,10 @@
             </div>
           </div>
         </div>
-        <div v-if="response" class="pt-3 pb-3 w-full">
+        <div
+          v-if="response && !response?.status === 'mail_sent'"
+          class="pt-3 pb-3 w-full"
+        >
           <p
             class="fluid-text-2xl"
             :class="{

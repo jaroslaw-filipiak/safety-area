@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useMainStore = defineStore('mainStore', {
   state: () => ({
     pricing: [],
+    pricingLoaded: false,
     cart: [],
     isCartOpen: false,
     prepayment: false,
@@ -34,8 +35,11 @@ export const useMainStore = defineStore('mainStore', {
         const data = await response.json();
 
         this.pricing = data;
+        this.pricingLoaded = true;
       } catch (e) {
+        console.log('error...');
         console.error(e);
+        this.pricingLoaded = false;
       }
     },
     async checkDiscountCode(payload) {

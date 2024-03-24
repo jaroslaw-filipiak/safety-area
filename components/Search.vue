@@ -3,9 +3,11 @@
     <p
       class="text-light text-[18px] lg:text-[20px] text-center mb-5 mt-5 lg:mt-0"
     >
-      Dodaj projekt
+      {{ pricingLoaded ? 'Dodaj projekt' : 'Wczytywanie cennika...' }}
     </p>
+    <Spinner v-if="!pricingLoaded" />
     <div
+      v-if="pricingLoaded"
       class="relative"
       :class="{ 'is-results-wrapper-visible': showList || searchTerm.length }"
     >
@@ -111,6 +113,7 @@
   const searchTerm = ref('');
   const selectedItems = ref([]);
   const showList = ref(false);
+  const pricingLoaded = computed(() => store.pricingLoaded);
 
   watch(selectedItems, (newSelectedItems) => {
     console.log('selected items changed... updating cart');

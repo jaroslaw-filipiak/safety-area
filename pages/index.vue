@@ -15,7 +15,6 @@
       <Popup />
       <Search />
       <!-- process -->
-
       <BillingDetails />
       <NewClientForm />
       <RegularClientForm />

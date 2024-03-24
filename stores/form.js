@@ -34,23 +34,6 @@ export const useFormStore = defineStore('formStore', {
   }),
 
   actions: {
-    async fetchPricing() {
-      const baseUrl = `${import.meta.env.VITE_BASE_URL}`;
-      console.log(baseUrl);
-      const apiUrl = useRuntimeConfig().public.apiBaseUrl;
-      console.log(apiUrl);
-      try {
-        const response = await fetch(
-          `http://grafikonline.test/wp-json/options/pricing`
-        );
-        const data = await response.json();
-
-        this.pricing = data;
-      } catch (e) {
-        console.error(e);
-      }
-    },
-
     async sendForm(payload) {
       const formID = payload;
       const formData = new FormData();
