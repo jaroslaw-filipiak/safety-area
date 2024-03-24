@@ -66,9 +66,7 @@ export const useFormStore = defineStore('formStore', {
         console.log(data);
 
         if (data.status === 'mail_sent') {
-          setTimeout(() => {
-            window.location.href = 'http://grafikonline.test/podziekowanie/';
-          }, 2000);
+          window.location.href = 'http://grafikonline.test/podziekowanie/';
         }
       } catch (e) {
         console.error(e);
@@ -76,6 +74,10 @@ export const useFormStore = defineStore('formStore', {
       // Append other form data fields here
 
       console.log('send form id:', payload);
+
+      setTimeout(() => {
+        this.sending = false;
+      }, 1000);
     },
     updateFormField(field, formObj, value) {
       console.log('update field', field, value);

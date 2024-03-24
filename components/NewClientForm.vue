@@ -68,10 +68,7 @@
         </div>
       </div>
       <div class="window__content transition-all">
-        <div
-          v-if="!sending"
-          class="form-wrapper flex w-full border-red pt-3 pb-3"
-        >
+        <div class="form-wrapper flex w-full border-red pt-3 pb-3">
           <div class="flex flex-col w-full">
             <!-- row name_surname + company_name -->
             <div class="form-row">
@@ -334,8 +331,11 @@
               <span
                 class="flex items-center justify-between text-light text-[14px] cursor-pointer pl-[24px] pr-[24px] selection:bg-none bg-red rounded-full h-[50px] min-w-[188px] hover:opacity-90 transition-all group-disabled:bg-dark group-disabled:opacity-50"
               >
-                Zamawiam
-                <span class="pl-4">
+                {{ sending ? 'Wysyłanie...' : 'Zamawiam' }}
+                <div class="scale-75">
+                  <Spinner v-if="sending" />
+                </div>
+                <span v-if="!sending" class="pl-4">
                   <svg
                     class="scale-[70%] -rotate-90"
                     width="14.993"
