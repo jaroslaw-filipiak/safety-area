@@ -1,27 +1,49 @@
-<!-- TODO: disable validaton on backend: https://contactform7.com/configuration-validator-faq/ -->
-
 <!-- 
-"title": "Projekt wizyt\u00f3wki firmowej",
- "id": 0
- [contact-form-7 id="b5c39b1" title="Projekt wizytówki firmowej"]
- _wpcf7_unit_tag: wpcf7-f68-p66-o1
- http://grafikonline.test/wp-json/contact-form-7/v1/contact-forms/65/feedback
-s -->
+{1: title: "Projekt wizytówki", form_id_feedback: "68", price: "200",…}
+-->
 
 <template>
   <div class="form-wrapper flex w-full border-red pt-3 pb-3">
     <div class="flex flex-col w-full">
       <div class="form-row">
         <label for="business_card_type">
-          <p>Czy wizytówka powinna być tłoczona ?</p>
+          <p>Typ wizytówki</p>
           <input
-            v-model="businessCardIsEmbossed"
+            @input="
+              formStore.updateFormField(
+                'business_card_type',
+                'cf7_68',
+                $event.target.value
+              )
+            "
+            v-model="businessCardType"
             name="business_card_type"
             id="business_card_type"
             type="text"
-            placeholder="np. ze złotym grawerem ?"
+            placeholder="typ wizytówki"
           />
-          <div class="text-red mt-1">Validacja error</div>
+          <!-- <div class="text-red mt-1">Validacja error</div> -->
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label for="business_card_weight">
+          <p>Gramatura papieru</p>
+          <input
+            @input="
+              formStore.updateFormField(
+                'business_card_weight',
+                'cf7_68',
+                $event.target.value
+              )
+            "
+            v-model="businessCardWeight"
+            name="business_card_weight"
+            id="business_card_weight"
+            type="text"
+            placeholder="np.200g"
+          />
+          <!-- <div class="text-red mt-1">Validacja error</div> -->
         </label>
       </div>
     </div>
@@ -32,9 +54,11 @@ s -->
   import { ref, computed } from 'vue';
 
   const store = useMainStore();
+  const formStore = useFormStore();
 
   const isFullyFilled = ref(false);
-  const businessCardIsEmbossed = ref('');
+  const businessCardType = ref('');
+  const businessCardWeight = ref('');
 
   // Get the file path dynamically
   const filePath = import.meta.url;
@@ -51,7 +75,7 @@ s -->
 
   // Check if form is fully filled
   const areAllFieldsFilled = computed(() => {
-    return businessCardIsEmbossed.value !== '';
+    return businessCardType.value !== '' && businessCardWeight.value !== '';
   });
 
   // Update isFullyFilled value

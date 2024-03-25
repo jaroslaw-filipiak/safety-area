@@ -1,54 +1,28 @@
-<!-- TODO: disable validaton on backend: https://contactform7.com/configuration-validator-faq/ -->
-
-<!-- 
- title": "Projekt wizytówki firmowej",
- "id": 0
-[contact-form-7 id="b5c39b1" title="Projekt wizytówki firmowej"]
- _wpcf7_unit_tag: wpcf7-f68-p66-o1
- http://grafikonline.test/wp-json/contact-form-7/v1/contact-forms/65/feedback
-s -->
+<!--
+  {title: "Projekt logotypu", form_id_feedback: "314", price: "2500",…} 
+ -->
 
 <template>
   <div class="form-wrapper flex w-full border-red pt-3 pb-3">
     <div class="flex flex-col w-full">
       <div class="form-row">
-        <label for="business_card_type">
-          <p>Czy wizytówka powinna być tłoczona ?</p>
+        <label for="logo_color_preferences">
+          <p>Preferowana kolorystyka logotypu</p>
           <input
             @input="
               formStore.updateFormField(
-                'business_card_type',
-                'cf7_68',
+                'logo_color_preferences',
+                'cf7_314',
                 $event.target.value
               )
             "
-            v-model="businessCardType"
-            name="business_card_type"
-            id="business_card_type"
+            v-model="logoColorPreferences"
+            name="logo_color_preferences"
+            id="logo_color_preferences"
             type="text"
-            placeholder="np. ze złotym grawerem ?"
+            placeholder="Preferowana kolorystyka logotypu"
           />
-          <div class="text-red mt-1">Validacja error</div>
-        </label>
-      </div>
-      <div class="form-row">
-        <label for="business_card_weight">
-          <p>Podaj gramature papieru</p>
-          <input
-            @input="
-              formStore.updateFormField(
-                'business_card_weight',
-                'cf7_68',
-                $event.target.value
-              )
-            "
-            v-model="businessCardWeight"
-            name="business_card_weight"
-            id="business_card_weight"
-            type="text"
-            placeholder="np: 300 gram"
-          />
-          <div class="text-red mt-1">Validacja error</div>
+          <!-- <div class="text-red mt-1">Validacja error</div> -->
         </label>
       </div>
     </div>
@@ -62,8 +36,7 @@ s -->
   const formStore = useFormStore();
   const isFullyFilled = ref(false);
 
-  const businessCardType = ref('');
-  const businessCardWeight = ref('');
+  const logoColorPreferences = ref('');
 
   // Get the file path dynamically
   const filePath = import.meta.url;
@@ -80,7 +53,7 @@ s -->
 
   // Check if form is fully filled
   const areAllFieldsFilled = computed(() => {
-    return businessCardType.value !== '' && businessCardWeight.value !== '';
+    return logoColorPreferences.value !== '';
   });
 
   // Update isFullyFilled value
@@ -91,8 +64,6 @@ s -->
   watch(isFullyFilled, (value) => {
     value ? store.addFormFilled(ID) : store.removeFormFilled(ID);
   });
-
-  const { client_type, business_card_type, business_card_weight } = formStore;
 </script>
 
 <style lang="scss" scoped>

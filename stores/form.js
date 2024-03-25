@@ -22,7 +22,7 @@ export const useFormStore = defineStore('formStore', {
     message: null,
 
     /*
-     *title": "Projekt wizytówki firmowej",
+     *title": "Projekt wizytówki",
      *"id": 0
      *"formid": 68
      */
@@ -30,6 +30,10 @@ export const useFormStore = defineStore('formStore', {
       _wpcf7_unit_tag: 'wpcf7-f68-p66-o1',
       business_card_type: '',
       business_card_weight: '',
+    },
+    cf7_314: {
+      _wpcf7_unit_tag: 'wpcf7-f314-p66-o1',
+      logo_color_preferences: '',
     },
   }),
 
@@ -79,10 +83,20 @@ export const useFormStore = defineStore('formStore', {
         this.sending = false;
       }, 1000);
     },
+
     updateFormField(field, formObj, value) {
       console.log('update field', field, value);
       console.log('formObj', formObj);
       formObj ? (this[formObj][field] = value) : (this[field] = value);
+    },
+    sendForm(formData) {
+      return new Promise((resolve, reject) => {
+        // Simulating form submission with setTimeout
+        setTimeout(() => {
+          console.log('Form sent:', formData);
+          resolve();
+        }, 1000); // Simulating a 1-second delay for sending the form
+      });
     },
   },
   getters: {
