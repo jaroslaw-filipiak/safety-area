@@ -59,7 +59,7 @@ export const useFormStore = defineStore('formStore', {
 
       try {
         const response = await fetch(
-          `http://grafikonline.test/wp-json/contact-form-7/v1/contact-forms/${payload}/feedback`,
+          `https://j-filipiak.pl/clients/grafikonline/wp-json/contact-form-7/v1/contact-forms/${payload}/feedback`,
           {
             method: 'POST',
             body: formData,
@@ -69,9 +69,9 @@ export const useFormStore = defineStore('formStore', {
         this.response = data;
         console.log(data);
 
-        if (data.status === 'mail_sent') {
-          window.location.href = 'http://grafikonline.test/podziekowanie/';
-        }
+        // if (data.status === 'mail_sent') {
+        //   window.location.href = 'https://j-filipiak.pl/clients/grafikonline/podziekowanie/';
+        // }
       } catch (e) {
         console.error(e);
       }
@@ -84,20 +84,85 @@ export const useFormStore = defineStore('formStore', {
       }, 1000);
     },
 
+    sendFormWithPromises(payload) {
+      return new Promise((resolve, reject) => {
+        const formID = payload;
+        const formData = new FormData();
+        const cf7Data = this[`cf7_${formID}`];
+        const cart = JSON.stringify(useMainStore().cart);
+
+        for (const key in cf7Data) {
+          formData.append(key, cf7Data[key]);
+        }
+
+        for (const key in this.client) {
+          formData.append(key, this.client[key]);
+        }
+
+        formData.append('order_id', this.order_id);
+        formData.append('cart', cart);
+
+        this.sending = true;
+
+        fetch(
+          `https://j-filipiak.pl/clients/grafikonline/wp-json/contact-form-7/v1/contact-forms/${payload}/feedback`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+              console.log('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.status === 'mail_sent') {
+              resolve(data);
+              console.log('Form sent, resolve', data);
+              this.response = data;
+            } else if (data.status === 'validation_failed') {
+              console.log('form rejected..');
+              reject(data);
+              this.response = data;
+            }
+
+            // Resolve the promise with the response data
+          })
+          .catch((error) => {
+            console.error(
+              'There was a problem with the fetch operation:',
+              error
+            );
+            reject(error); // Reject the promise with the error
+            console.log(
+              'There was a problem with the fetch operation: reject error',
+              error
+            );
+          })
+          .finally(() => {
+            console.log('finally');
+            this.sending = false;
+          });
+      });
+    },
+
     updateFormField(field, formObj, value) {
       console.log('update field', field, value);
       console.log('formObj', formObj);
       formObj ? (this[formObj][field] = value) : (this[field] = value);
     },
-    sendForm(formData) {
-      return new Promise((resolve, reject) => {
-        // Simulating form submission with setTimeout
-        setTimeout(() => {
-          console.log('Form sent:', formData);
-          resolve();
-        }, 1000); // Simulating a 1-second delay for sending the form
-      });
-    },
+    // sendForm(formData) {
+    //   return new Promise((resolve, reject) => {
+    //     // Simulating form submission with setTimeout
+    //     setTimeout(() => {
+    //       console.log('Form sent:', formData);
+    //       resolve();
+    //     }, 1000); // Simulating a 1-second delay for sending the form
+    //   });
+    // },
   },
   getters: {
     getOrderID: (state) => {

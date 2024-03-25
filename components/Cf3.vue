@@ -5,7 +5,7 @@
  "id": 3
  [contact-form-7 id="b5c39b1" title="Projekt wizytówki firmowej"]
  _wpcf7_unit_tag: wpcf7-f68-p66-o1
- http://grafikonline.test/wp-json/contact-form-7/v1/contact-forms/65/feedback
+ https://j-filipiak.pl/clients/grafikonline/wp-json/contact-form-7/v1/contact-forms/65/feedback
 s -->
 
 <template>

@@ -379,10 +379,24 @@
     acceptedPrivacyPolicy.value = value;
   });
 
-  const submit = () => {
-    formStore.getFormsInfo.map((item) => {
-      formStore.sendForm(item.form_id_feedback);
-    });
+  const submit = async () => {
+    // formStore.getFormsInfo.map((item) => {
+    //   formStore.sendForm(item.form_id_feedback);
+    // });
+
+    const formsIDs = formStore.getFormsInfo.map(
+      (formObj) => formObj.form_id_feedback
+    );
+    console.log(formsIDs);
+
+    for (const formID in formsIDs) {
+      try {
+        await formStore.sendFormWithPromises(formsIDs[formID]);
+        console.log('wyslano form nr:', formsIDs[formID]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 </script>
 
